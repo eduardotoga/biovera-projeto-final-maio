@@ -144,7 +144,7 @@
 
   /* ---- Header ---- */
   .header-main {
-    background: #43841F;
+    background: #098700;
     border-bottom: 1px solid rgba(255,255,255,.08);
     padding: 14px 0;
     position: sticky; top: 0; z-index: 100;
@@ -157,8 +157,8 @@
   }
   .scroll-progress__bar {
     height: 100%; width: 0%;
-    background: var(--levita);
-    box-shadow: 0 0 6px rgba(30,86,181,.45);
+    background: #5bc95c;
+    box-shadow: 0 0 6px rgba(91,201,92,.45);
     transition: width .08s linear;
     transform-origin: left center;
   }
@@ -168,7 +168,7 @@
   .header-main .inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
   .header-main .inner .header-logo { grid-column: 2; justify-self: center; }
   .header-main .inner .header-trust { grid-column: 3; justify-self: end; }
-  .header-logo img { height: 38px; object-fit: contain; }
+  .header-logo img { height: 54px; object-fit: contain; }
   .header-trust { display: flex; align-items: center; gap: 18px; font-size: .82rem; color: rgba(255,255,255,.85); font-weight: 500; }
   .header-trust .dot { width: 6px; height: 6px; border-radius: 50%; background: #5DEC8A; box-shadow: 0 0 0 4px rgba(93,236,138,.25); }
   .header-trust .item { display: flex; align-items: center; gap: 8px; }
@@ -234,14 +234,14 @@
   .produto-infos { padding-top: 8px; }
   .pill-eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(30,86,181,.08); color: var(--levita);
-    border: 1px solid rgba(30,86,181,.18);
+    background: rgba(195,219,182,.35); color: #255e04;
+    border: 1px solid rgba(37,94,4,.2);
     padding: 6px 12px; border-radius: 999px;
     font-size: .72rem; font-weight: 600; letter-spacing: .8px;
     text-transform: uppercase; margin-bottom: 16px;
   }
-  .pill-eyebrow .dot-pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--levita); animation: dotpulse 1.8s infinite; }
-  @keyframes dotpulse { 0%,100% { box-shadow: 0 0 0 0 rgba(30,86,181,.4); } 70% { box-shadow: 0 0 0 7px rgba(30,86,181,0); } }
+  .pill-eyebrow .dot-pulse { width: 7px; height: 7px; border-radius: 50%; background: #255e04; animation: dotpulse 1.8s infinite; }
+  @keyframes dotpulse { 0%,100% { box-shadow: 0 0 0 0 rgba(37,94,4,.4); } 70% { box-shadow: 0 0 0 7px rgba(37,94,4,0); } }
 
   .produto-titulo {
     font-size: 2rem; font-weight: 700; color: var(--navy-deep);
@@ -287,8 +287,8 @@
 
   .variacao-label {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(30,86,181,.08); color: var(--levita);
-    border: 1px solid rgba(30,86,181,.18);
+    background: rgba(195,219,182,.35); color: #255e04;
+    border: 1px solid rgba(37,94,4,.2);
     padding: 6px 12px; border-radius: 999px;
     font-size: .72rem; font-weight: 700; letter-spacing: 1.2px;
     text-transform: uppercase; margin-bottom: 16px;
@@ -297,30 +297,30 @@
   .variacao-btn {
     position: relative; display: flex; align-items: center; gap: 14px;
     padding: 16px 18px 16px 44px;
-    border: 2px solid #C9D6EA;
+    border: 2px solid #c3dbb6;
     border-radius: var(--r-lg);
     cursor: pointer;
-    background: #F5F9FF;
+    background: #f4faf1;
     transition: all .25s ease;
     text-align: left; width: 100%;
     font-family: inherit;
-    box-shadow: 0 8px 24px rgba(15,61,143,.12), 0 2px 8px rgba(15,61,143,.06);
+    box-shadow: 0 8px 24px rgba(195,219,182,.45), 0 2px 8px rgba(195,219,182,.3);
   }
   .variacao-btn::before {
     content: ''; position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
     width: 20px; height: 20px; border-radius: 50%;
-    border: 2px solid #B5C6DD; background: #fff;
+    border: 2px solid #c3dbb6; background: #fff;
     transition: all .2s ease;
   }
-  .variacao-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(15,61,143,.18), 0 3px 10px rgba(15,61,143,.08); }
+  .variacao-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(195,219,182,.6), 0 3px 10px rgba(195,219,182,.4); }
   .variacao-btn.ativo {
-    border-color: var(--navy);
-    background: #D6E4F8;
+    border-color: #255e04;
+    background: #e4f4dc;
     transform: scale(1.02);
-    box-shadow: 0 14px 32px rgba(15,61,143,.22), 0 4px 12px rgba(15,61,143,.1);
+    box-shadow: 0 14px 32px rgba(37,94,4,.15), 0 4px 12px rgba(37,94,4,.1);
   }
   .variacao-btn.ativo::before {
-    background: var(--navy); border-color: var(--navy);
+    background: #255e04; border-color: #255e04;
     box-shadow: inset 0 0 0 4px #fff;
   }
   .variacao-btn .var-img {
@@ -844,7 +844,7 @@
   /* ---- Social toast ---- */
   .social-toast {
     position: fixed;
-    left: 16px; top: 90px;
+    right: 16px; bottom: 24px; left: auto; top: auto;
     width: 300px; max-width: calc(100vw - 32px);
     background: #fff;
     border: 1px solid var(--line);
@@ -854,7 +854,7 @@
     box-shadow: 0 12px 32px -8px rgba(15,61,143,.22), 0 4px 8px rgba(15,61,143,.08);
     z-index: 250;
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(20px);
     transition: opacity .3s ease-out, transform .3s ease-out;
     pointer-events: none;
   }
@@ -875,7 +875,7 @@
   .social-toast .live { font-size: .74rem; color: var(--green-2); font-weight: 600; margin-top: 3px; display: flex; align-items: center; gap: 4px; }
   .social-toast .live::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--green-2); flex-shrink: 0; }
   @media (max-width: 600px) {
-    .social-toast { width: 320px; top: 80px; bottom: auto; }
+    .social-toast { width: 300px; bottom: 16px; right: 16px; top: auto; }
     .social-toast .sub { font-size: .72rem; }
   }
 
@@ -917,7 +917,7 @@
   }
   @media (max-width: 600px) {
     .container { padding: 0 16px; }
-    .header-logo img { height: 32px; }
+    .header-logo img { height: 44px; }
     .produto-titulo { font-size: 1.4rem; }
     .preco-por { font-size: 2rem; }
     .preco-card { padding: 18px 20px; }
@@ -1745,8 +1745,7 @@
       var scrollTop = window.scrollY || doc.scrollTop || 0;
       var max = (doc.scrollHeight - doc.clientHeight) || 1;
       var t = Math.min(Math.max(scrollTop / max, 0), 1);
-      var eased = 1 - Math.pow(1 - t, 4);
-      bar.style.width = (eased * 100).toFixed(2) + '%';
+      bar.style.width = (t * 100).toFixed(2) + '%';
       ticking = false;
     }
     function onScrollProgress() {
