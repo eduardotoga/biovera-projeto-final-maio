@@ -872,7 +872,8 @@
   .social-toast .body { flex: 1; min-width: 0; }
   .social-toast .title { font-weight: 700; font-size: .9rem; color: var(--navy-deep); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .social-toast .sub { font-size: .76rem; color: var(--slate); margin-top: 2px; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .social-toast .sub .live { color: var(--green-2); font-weight: 600; }
+  .social-toast .live { font-size: .74rem; color: var(--green-2); font-weight: 600; margin-top: 3px; display: flex; align-items: center; gap: 4px; }
+  .social-toast .live::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--green-2); flex-shrink: 0; }
   @media (max-width: 600px) {
     .social-toast { width: 320px; top: 80px; bottom: auto; }
     .social-toast .sub { font-size: .72rem; }
@@ -1783,30 +1784,45 @@
   })();
 
   // Social proof toasts
-  function showToast(name, action, onShown) {
+  var toastData = [
+    { name: 'Patrícia M.',    produto: 'Óleo de Orégano Biovera' },
+    { name: 'Rodrigo S.',     produto: 'Óleo de Orégano Biovera' },
+    { name: 'Camila F.',      produto: 'Óleo de Orégano Biovera' },
+    { name: 'Juliana R.',     produto: 'Óleo de Orégano Biovera' },
+    { name: 'Thiago A.',      produto: 'Óleo de Orégano Biovera' },
+    { name: 'Fernanda L.',    produto: 'Óleo de Orégano Biovera' },
+    { name: 'Marcos V.',      produto: 'Óleo de Orégano Biovera' },
+    { name: 'Beatriz C.',     produto: 'Óleo de Orégano Biovera' },
+    { name: 'Lucas M.',       produto: 'Óleo de Orégano Biovera' },
+    { name: 'Amanda P.',      produto: 'Óleo de Orégano Biovera' },
+    { name: 'Carlos H.',      produto: 'Óleo de Orégano Biovera' },
+    { name: 'Rafaela G.',     produto: 'Óleo de Orégano Biovera' }
+  ];
+  var toastIndex = 0;
+  function showToast(name, produto) {
     var t = document.createElement('div');
     t.className = 'social-toast';
-    t.innerHTML = '<div class="icon">✓</div><div class="body"><div class="title">' + name + '</div><div class="sub">' + action + ' <span class="live">● agora</span></div></div>';
+    t.innerHTML =
+      '<div class="icon">✓</div>' +
+      '<div class="body">' +
+        '<div class="title">' + name + '</div>' +
+        '<div class="sub">comprou ' + produto + '</div>' +
+        '<div class="live">agora</div>' +
+      '</div>';
     document.body.appendChild(t);
     requestAnimationFrame(function() { t.classList.add('shown'); });
-    if (onShown) setTimeout(onShown, 400);
     setTimeout(function() {
       t.classList.add('hiding');
       setTimeout(function() { t.remove(); }, 220);
-    }, 6000);
+    }, 5000);
   }
-  setTimeout(function() {
-    showToast('Renata Almeida Castro', 'adquiriu 2 unidades Levita Bio', function() {
-      var p = document.getElementById('contador-pessoas'); if (p) p.textContent = '13';
-      var e = document.getElementById('contador-estoque'); if (e) e.textContent = '6';
-    });
-  }, 60000);
-  setTimeout(function() {
-    showToast('Eduardo Henrique Vargas', 'adquiriu 3 unidades Levita Bio', function() {
-      var p = document.getElementById('contador-pessoas'); if (p) p.textContent = '14';
-      var e = document.getElementById('contador-estoque'); if (e) e.textContent = '3';
-    });
-  }, 120000);
+  function cycleToasts() {
+    var d = toastData[toastIndex % toastData.length];
+    showToast(d.name, d.produto);
+    toastIndex++;
+    setTimeout(cycleToasts, 20000);
+  }
+  setTimeout(cycleToasts, 8000);
 
   // Animated counters
   (function() {
