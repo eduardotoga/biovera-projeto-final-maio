@@ -973,7 +973,7 @@
 
 <header class="header-main">
   <div class="container inner">
-    <a href="#" class="header-logo" id="42504484-d869-a215-15a9-ad721f294a4f"><img src="https://pub-34e8d362c4cb41e7a63851f01f9f156c.r2.dev/biovera%20logo%20branca.svg" alt="Biovera" draggable="false"></a>
+    <a href="#" class="header-logo" id="42504484-d869-a215-15a9-ad721f294a4f"><img src="https://pub-34e8d362c4cb41e7a63851f01f9f156c.r2.dev/bioveralogowhite.png" alt="Biovera" draggable="false"></a>
     <div class="header-trust">
       <span class="item"><span class="dot"></span>Compra 100% segura</span>
       <span class="item">Envio Sedex grátis</span>
@@ -1388,7 +1388,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col footer-brand">
-        <img src="https://pub-34e8d362c4cb41e7a63851f01f9f156c.r2.dev/biovera%20logo%20branca.svg" alt="Biovera" draggable="false">
+        <img src="https://pub-34e8d362c4cb41e7a63851f01f9f156c.r2.dev/bioveralogowhite.png" alt="Biovera" draggable="false">
         <p>Dispositivos médicos premium projetados para devolver mobilidade, conforto e independência. Tecnologia a grau médico, agora no conforto da sua casa.</p>
       </div>
       <div class="footer-col">
@@ -1735,29 +1735,27 @@
   window.addEventListener('resize', onScroll);
   onScroll();
 
-  // Scroll progress bar
+  // VSL loading bar — time-based: fast start, very slow finish
   (function() {
     var bar = document.getElementById('scroll-progress-bar');
     if (!bar) return;
-    var ticking = false;
-    function update() {
-      var doc = document.documentElement;
-      var scrollTop = window.scrollY || doc.scrollTop || 0;
-      var max = (doc.scrollHeight - doc.clientHeight) || 1;
-      var ratio = Math.min(Math.max(scrollTop / max, 0), 1);
-      var pct = Math.min(100, Math.log(1 + ratio * 10) / Math.log(11) * 100);
-      bar.style.width = pct.toFixed(2) + '%';
-      ticking = false;
-    }
-    function onScrollProgress() {
-      if (!ticking) {
-        window.requestAnimationFrame(update);
-        ticking = true;
+    var START = Date.now();
+    var FAST_MS  = 5000;   // 0–5s: preenche até 65%
+    var SLOW_MS  = 300000; // 5s–5min: rasteja de 65% até 99%
+    function tick() {
+      var elapsed = Date.now() - START;
+      var pct;
+      if (elapsed < FAST_MS) {
+        var t = elapsed / FAST_MS;
+        pct = 65 * (1 - Math.pow(1 - t, 2)); // ease-out quadrático até 65%
+      } else {
+        var t2 = Math.min((elapsed - FAST_MS) / SLOW_MS, 1);
+        pct = 65 + 34 * t2; // rasteja os últimos 34% em ~5 minutos
       }
+      bar.style.width = Math.min(99, pct).toFixed(1) + '%';
+      setTimeout(tick, 120);
     }
-    window.addEventListener('scroll', onScrollProgress, { passive: true });
-    window.addEventListener('resize', onScrollProgress);
-    update();
+    tick();
   })();
 
   // Geolocalização por IP
