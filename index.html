@@ -1841,7 +1841,7 @@
 
   // Geolocalização por IP
   (function() {
-    fetch('https://ipinfo.io/json?token=1addab3df902c0')
+    fetch('https://api.ipinfo.io/lite/json?token=d92d196614f82f')
       .then(function(r) { return r.json(); })
       .then(function(data) {
         if (data.city && data.region) {
