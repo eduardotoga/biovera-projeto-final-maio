@@ -1747,7 +1747,6 @@
       var max = (sh - ch) || 1;
       var t = Math.min(Math.max(scrollTop / max, 0), 1);
       var eased = 1 - Math.pow(1 - t, 4);
-      console.log('[barra] scrollTop=' + scrollTop + ' scrollHeight=' + sh + ' max=' + max + ' t=' + t.toFixed(4) + ' eased=' + (eased*100).toFixed(1) + '%');
       bar.style.width = (eased * 100).toFixed(2) + '%';
       ticking = false;
     }
