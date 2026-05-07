@@ -1770,6 +1770,10 @@
   }
   window.selecionarVariante = selecionarVariante;
 
+  document.querySelectorAll('.variacao-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { selecionarVariante(btn); });
+  });
+
   // CTA behavior
   document.querySelectorAll('#btn-comprar, #btn-cta-final, #btn-sticky').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
