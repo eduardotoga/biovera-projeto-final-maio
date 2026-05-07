@@ -228,8 +228,17 @@
 
   .lightbox { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(10,22,40,.92); backdrop-filter: blur(8px); align-items: center; justify-content: center; }
   .lightbox.aberto { display: flex; }
-  .lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; border-radius: var(--r-md); }
-  .lightbox-fechar { position: absolute; top: 24px; right: 28px; color: #fff; font-size: 1.6rem; cursor: pointer; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; }
+  .lightbox img { max-width: 82vw; max-height: 86vh; object-fit: contain; border-radius: var(--r-md); user-select: none; -webkit-user-drag: none; }
+  .lightbox-fechar { position: absolute; top: 24px; right: 28px; color: #fff; font-size: 1.6rem; cursor: pointer; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; z-index: 2; }
+  .lb-prev, .lb-next { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 3rem; line-height: 1; cursor: pointer; width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.12); display: flex; align-items: center; justify-content: center; transition: background .2s; user-select: none; z-index: 2; }
+  .lb-prev { left: 20px; }
+  .lb-next { right: 20px; }
+  .lb-prev:hover, .lb-next:hover { background: rgba(255,255,255,.25); }
+  .lb-counter { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,.7); font-size: .85rem; font-weight: 600; letter-spacing: .5px; pointer-events: none; }
+  @media (max-width: 600px) {
+    .lb-prev { left: 8px; } .lb-next { right: 8px; }
+    .lightbox img { max-width: 96vw; max-height: 80vh; }
+  }
 
   .produto-infos { padding-top: 8px; }
   .pill-eyebrow {
@@ -1420,7 +1429,10 @@
 
 <div class="lightbox" id="lightbox">
   <span class="lightbox-fechar">✕</span>
-  <img id="lightbox-img" src="https://levitamedicina.com/levitaabioo/uploads/prod-foto-produto-05.jpg" alt="Biovera" draggable="false">
+  <span class="lb-prev">&#8249;</span>
+  <img id="lightbox-img" src="https://pub-34e8d362c4cb41e7a63851f01f9f156c.r2.dev/1.png" alt="Biovera" draggable="false">
+  <span class="lb-next">&#8250;</span>
+  <span class="lb-counter" id="lb-counter">1 / 5</span>
 </div>
 
 <script>
@@ -1552,25 +1564,70 @@
   window.abrirLightbox = abrirLightbox;
   window.fecharLightbox = fecharLightbox;
 
-  // Fechar ao clicar no fundo ou no X
+  // ---- Lightbox: fechar, navegar, arrastar, teclado ----
   var lb = document.getElementById('lightbox');
-  if (lb) {
-    lb.addEventListener('click', function(e) {
-      if (e.target === lb || e.target.classList.contains('lightbox-fechar')) {
-        lb.classList.remove('aberto');
-        document.body.style.overflow = '';
-      }
-    });
+  var lbCounter = document.getElementById('lb-counter');
+
+  function lbClose() {
+    if (!lb) return;
+    lb.classList.remove('aberto');
+    document.body.style.overflow = '';
   }
-  // Fechar com Escape
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      var lbEl = document.getElementById('lightbox');
-      if (lbEl && lbEl.classList.contains('aberto')) {
-        lbEl.classList.remove('aberto');
-        document.body.style.overflow = '';
-      }
+  function lbUpdateCounter() {
+    if (lbCounter && TOTAL) lbCounter.textContent = (current + 1) + ' / ' + TOTAL;
+  }
+  function lbGoTo(i) {
+    goTo(i, true);
+    lbUpdateCounter();
+  }
+
+  // Sobrescreve abrirLightbox para atualizar contador ao abrir
+  window.abrirLightbox = function() {
+    if (!lb) return;
+    updateLightboxSrc();
+    lbUpdateCounter();
+    lb.classList.add('aberto');
+    document.body.style.overflow = 'hidden';
+  };
+
+  if (lb) {
+    // Fechar no fundo ou no X
+    lb.addEventListener('click', function(e) {
+      if (e.target === lb || e.target.classList.contains('lightbox-fechar')) lbClose();
+    });
+
+    // Setas
+    var lbPrev = lb.querySelector('.lb-prev');
+    var lbNext = lb.querySelector('.lb-next');
+    if (lbPrev) lbPrev.addEventListener('click', function(e) { e.stopPropagation(); lbGoTo(current - 1); });
+    if (lbNext) lbNext.addEventListener('click', function(e) { e.stopPropagation(); lbGoTo(current + 1); });
+
+    // Drag / swipe na imagem expandida
+    var lbImg = document.getElementById('lightbox-img');
+    var lbDragStartX = 0, lbDragging = false;
+    if (lbImg) {
+      lbImg.addEventListener('mousedown', function(e) { lbDragging = true; lbDragStartX = e.clientX; e.preventDefault(); });
+      lb.addEventListener('mousemove', function(e) { /* passivo */ });
+      lb.addEventListener('mouseup', function(e) {
+        if (!lbDragging) return;
+        lbDragging = false;
+        var dx = e.clientX - lbDragStartX;
+        if (Math.abs(dx) > 40) { dx < 0 ? lbGoTo(current + 1) : lbGoTo(current - 1); }
+      });
+      lbImg.addEventListener('touchstart', function(e) { lbDragStartX = e.touches[0].clientX; }, { passive: true });
+      lbImg.addEventListener('touchend', function(e) {
+        var dx = e.changedTouches[0].clientX - lbDragStartX;
+        if (Math.abs(dx) > 40) { dx < 0 ? lbGoTo(current + 1) : lbGoTo(current - 1); }
+      });
     }
+  }
+
+  // Teclado: Escape fecha, setas navegam
+  document.addEventListener('keydown', function(e) {
+    if (!lb || !lb.classList.contains('aberto')) return;
+    if (e.key === 'Escape') lbClose();
+    if (e.key === 'ArrowLeft') lbGoTo(current - 1);
+    if (e.key === 'ArrowRight') lbGoTo(current + 1);
   });
 
   if (galeriaMain) {
