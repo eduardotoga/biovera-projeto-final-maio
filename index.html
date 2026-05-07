@@ -1552,6 +1552,27 @@
   window.abrirLightbox = abrirLightbox;
   window.fecharLightbox = fecharLightbox;
 
+  // Fechar ao clicar no fundo ou no X
+  var lb = document.getElementById('lightbox');
+  if (lb) {
+    lb.addEventListener('click', function(e) {
+      if (e.target === lb || e.target.classList.contains('lightbox-fechar')) {
+        lb.classList.remove('aberto');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+  // Fechar com Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var lbEl = document.getElementById('lightbox');
+      if (lbEl && lbEl.classList.contains('aberto')) {
+        lbEl.classList.remove('aberto');
+        document.body.style.overflow = '';
+      }
+    }
+  });
+
   if (galeriaMain) {
     galeriaMain.addEventListener('click', function(e) {
       if (galeriaMain.dataset.justDragged === '1') {
