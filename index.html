@@ -1735,8 +1735,7 @@
   window.addEventListener('resize', onScroll);
   onScroll();
 
-  // Barra de progresso: scroll-based com curva raiz quadrada
-  // Efeito VSL: preenche rapido no inicio, desacelera no final
+  // Barra de progresso — idêntica ao original (ease-out quártico)
   (function() {
     var bar = document.getElementById('scroll-progress-bar');
     if (!bar) return;
@@ -1745,17 +1744,16 @@
       var doc = document.documentElement;
       var scrollTop = window.scrollY || doc.scrollTop || 0;
       var max = (doc.scrollHeight - doc.clientHeight) || 1;
-      var ratio = Math.min(Math.max(scrollTop / max, 0), 1);
-      // raiz quadrada: 5% scroll → 22% barra, 25% → 50%, 50% → 71%, 100% → 100%
-      var pct = Math.sqrt(ratio) * 100;
-      bar.style.width = pct.toFixed(1) + '%';
+      var t = Math.min(Math.max(scrollTop / max, 0), 1);
+      var eased = 1 - Math.pow(1 - t, 4);
+      bar.style.width = (eased * 100).toFixed(2) + '%';
       ticking = false;
     }
-    function onScroll() {
+    function onScrollProgress() {
       if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
     }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+    window.addEventListener('scroll', onScrollProgress, { passive: true });
+    window.addEventListener('resize', onScrollProgress);
     update();
   })();
 
