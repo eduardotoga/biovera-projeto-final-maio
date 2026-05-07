@@ -1741,11 +1741,13 @@
     if (!bar) return;
     var ticking = false;
     function update() {
-      var doc = document.documentElement;
-      var scrollTop = window.scrollY || doc.scrollTop || 0;
-      var max = (doc.scrollHeight - doc.clientHeight) || 1;
+      var scrollTop = window.scrollY || window.pageYOffset || 0;
+      var sh = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight, document.body.offsetHeight);
+      var ch = window.innerHeight;
+      var max = (sh - ch) || 1;
       var t = Math.min(Math.max(scrollTop / max, 0), 1);
       var eased = 1 - Math.pow(1 - t, 4);
+      console.log('[barra] scrollTop=' + scrollTop + ' scrollHeight=' + sh + ' max=' + max + ' t=' + t.toFixed(4) + ' eased=' + (eased*100).toFixed(1) + '%');
       bar.style.width = (eased * 100).toFixed(2) + '%';
       ticking = false;
     }
