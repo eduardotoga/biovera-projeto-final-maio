@@ -183,7 +183,7 @@
     background: #fff;
     border: 1px solid var(--line);
     border-radius: var(--r-xl);
-    overflow: hidden; position: relative; cursor: default;
+    overflow: hidden; position: relative; cursor: zoom-in;
     box-shadow: var(--shadow-md);
     touch-action: pan-y;
     user-select: none; -webkit-user-select: none;
@@ -1552,7 +1552,6 @@
   window.abrirLightbox = abrirLightbox;
   window.fecharLightbox = fecharLightbox;
 
-  /* lightbox desativado
   if (galeriaMain) {
     galeriaMain.addEventListener('click', function(e) {
       if (galeriaMain.dataset.justDragged === '1') {
@@ -1562,7 +1561,6 @@
       abrirLightbox();
     });
   }
-  */
 
   function onPointerDown(clientX) {
     dragging = true;
