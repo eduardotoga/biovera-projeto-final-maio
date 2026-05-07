@@ -168,7 +168,7 @@
   .header-main .inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
   .header-main .inner .header-logo { grid-column: 2; justify-self: center; }
   .header-main .inner .header-trust { grid-column: 3; justify-self: end; }
-  .header-logo img { height: 54px; object-fit: contain; }
+  .header-logo img { width: 180px; height: 44px; object-fit: contain; object-position: center; }
   .header-trust { display: flex; align-items: center; gap: 18px; font-size: .82rem; color: rgba(255,255,255,.85); font-weight: 500; }
   .header-trust .dot { width: 6px; height: 6px; border-radius: 50%; background: #5DEC8A; box-shadow: 0 0 0 4px rgba(93,236,138,.25); }
   .header-trust .item { display: flex; align-items: center; gap: 8px; }
@@ -917,7 +917,7 @@
   }
   @media (max-width: 600px) {
     .container { padding: 0 16px; }
-    .header-logo img { height: 44px; }
+    .header-logo img { width: 140px; height: 36px; }
     .produto-titulo { font-size: 1.4rem; }
     .preco-por { font-size: 2rem; }
     .preco-card { padding: 18px 20px; }
@@ -1019,7 +1019,7 @@
         <div class="compra-card">
           <span class="variacao-label">Selecione a quantidade</span>
           <div class="variacao-opcoes" id="variacao-opcoes">
-            <button class="variacao-btn" type="button" data-index="0" data-link="https://www.pedidolevita.com/checkout/direct/dD0wJnA9MyZ2PVJGRllaNDRZSDoxJnE9MSZ1PXByb2R1Y3RzbGV2aXRhYmlv" data-preco="99,90" data-preco-de="200,00" data-pix="99,90" data-parcelas="12" data-valor-parcela="10,03" data-estoque="6" id="590e2ad2-2450-316b-91e4-eac19f87001f">
+            <button class="variacao-btn" type="button" data-index="0" data-link="https://pagamento.bioveraoficial.com/checkout?product=3b47c584-2f38-11f1-b2a5-46da4690ad53" data-preco="99,90" data-preco-de="200,00" data-pix="99,90" data-parcelas="12" data-valor-parcela="10,03" data-estoque="6" id="590e2ad2-2450-316b-91e4-eac19f87001f">
               <span class="badge-topo">50% OFF</span>
               <img class="var-img" src="https://pub-34e8d362c4cb41e7a63851f01f9f156c.r2.dev/bundle-1.png" alt="1 Unidade Biovera" draggable="false">
               <div class="var-info">
@@ -1031,7 +1031,7 @@
                 <div class="var-preco">R$ 99,90</div>
               </div>
             </button>
-            <button class="variacao-btn" type="button" data-index="1" data-link="https://www.pedidolevita.com/checkout/direct/dD0wJnA9MyZ2PVJGRllaNDRZSDoyJnE9MSZ1PXByb2R1Y3RzbGV2aXRhYmlv" data-preco="169,90" data-preco-de="400,00" data-pix="169,90" data-parcelas="12" data-valor-parcela="17,04" data-estoque="6" id="e8f9aab0-cd26-7e51-a907-8428fb668c4e">
+            <button class="variacao-btn" type="button" data-index="1" data-link="https://pagamento.bioveraoficial.com/checkout?product=3c6ebb02-2f38-11f1-b2a5-46da4690ad53" data-preco="169,90" data-preco-de="400,00" data-pix="169,90" data-parcelas="12" data-valor-parcela="17,04" data-estoque="6" id="e8f9aab0-cd26-7e51-a907-8428fb668c4e">
               <span class="badge-topo green">Mais Vendido</span>
               <img class="var-img" src="https://pub-34e8d362c4cb41e7a63851f01f9f156c.r2.dev/bundle-2.png" alt="2 Unidades Biovera" draggable="false">
               <div class="var-info">
@@ -1043,7 +1043,7 @@
                 <div class="var-preco">R$ 169,90</div>
               </div>
             </button>
-            <button class="variacao-btn" type="button" data-index="2" data-link="https://www.pedidolevita.com/checkout/direct/dD0wJnA9MyZ2PVJGRllaNDRZSDozJnE9MSZ1PXByb2R1Y3RzbGV2aXRhYmlv" data-preco="209,90" data-preco-de="600,00" data-pix="209,90" data-parcelas="12" data-valor-parcela="21,04" data-estoque="6" id="05552930-aa2b-8b23-ef6b-aa5e7eb93dda">
+            <button class="variacao-btn" type="button" data-index="2" data-link="https://pagamento.bioveraoficial.com/checkout?product=3d999cab-2f38-11f1-b2a5-46da4690ad53" data-preco="209,90" data-preco-de="600,00" data-pix="209,90" data-parcelas="12" data-valor-parcela="21,04" data-estoque="6" id="05552930-aa2b-8b23-ef6b-aa5e7eb93dda">
               <span class="badge-topo purple">Mais Barato</span>
               <img class="var-img" src="https://pub-34e8d362c4cb41e7a63851f01f9f156c.r2.dev/bundle-3.png" alt="3 Unidades Biovera" draggable="false">
               <div class="var-info">
@@ -1744,8 +1744,9 @@
       var doc = document.documentElement;
       var scrollTop = window.scrollY || doc.scrollTop || 0;
       var max = (doc.scrollHeight - doc.clientHeight) || 1;
-      var t = Math.min(Math.max(scrollTop / max, 0), 1);
-      bar.style.width = (t * 100).toFixed(2) + '%';
+      var ratio = Math.min(Math.max(scrollTop / max, 0), 1);
+      var pct = Math.min(100, Math.log(1 + ratio * 10) / Math.log(11) * 100);
+      bar.style.width = pct.toFixed(2) + '%';
       ticking = false;
     }
     function onScrollProgress() {
