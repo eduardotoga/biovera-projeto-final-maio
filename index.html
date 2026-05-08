@@ -804,6 +804,16 @@
     object-fit: cover; flex-shrink: 0;
     border: 2px solid var(--bg);
     box-shadow: 0 0 0 1px var(--line);
+    display: block; overflow: hidden;
+  }
+  .skel-wrap.review-avatar {
+    display: block; width: 48px; height: 48px;
+    border-radius: 50%; overflow: hidden; flex-shrink: 0;
+  }
+  .skel-wrap.review-avatar img, img.review-avatar {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    display: block; border-radius: 50%;
   }
   .review-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
   .review-info-top { display: flex; align-items: center; gap: 8px; min-width: 0; }
