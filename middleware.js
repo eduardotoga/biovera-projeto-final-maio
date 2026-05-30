@@ -3,7 +3,7 @@ export const config = { matcher: '/' };
   export default function middleware(request) {
     const ip = (request.headers.get('x-forwarded-for') || '').split(',')[0].trim();
 
-    if (ip === '168.232.42.103' || ip === '177.75.104.45') {
+    if (ip === '168.232.42.79' || ip === '177.75.104.45') {
       return;
     }
 
